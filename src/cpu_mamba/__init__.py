@@ -21,5 +21,5 @@ Force the time-loop fallback (for parity testing):
 """
 from cpu_mamba._mamba import CPUMamba, assert_state_dict_compatible
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __all__ = ["CPUMamba", "assert_state_dict_compatible", "__version__"]
