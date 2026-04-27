@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cpu-mamba"
+version = "0.1.0"
+description = "CPU-only Mamba S6 block, drop-in compatible with mamba_ssm.Mamba state_dict. JIT-compiled C++ kernel + pure-PyTorch fallback."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Zynerji" },
+]
+keywords = ["mamba", "state-space-model", "selective-scan", "cpu-inference", "ssm", "deep-learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0",
+]
+
+[project.optional-dependencies]
+fast = ["ninja>=1.10"]
+test = ["pytest>=7.0", "ninja>=1.10"]
+
+[project.urls]
+Homepage = "https://github.com/Zynerji/cpu-mamba"
+Repository = "https://github.com/Zynerji/cpu-mamba"
+Issues = "https://github.com/Zynerji/cpu-mamba/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cpu_mamba = ["*.cpp"]
