@@ -20,6 +20,15 @@ Force the time-loop fallback (for parity testing):
     CPU_MAMBA_FORCE_TIME_LOOP=1 python ...
 """
 from cpu_mamba._mamba import CPUMamba, assert_state_dict_compatible
+from cpu_mamba.quant import QuantConfig, QuantizedLinear, quantize_block, memory_footprint
 
-__version__ = "0.3.0"
-__all__ = ["CPUMamba", "assert_state_dict_compatible", "__version__"]
+__version__ = "0.4.0"
+__all__ = [
+    "CPUMamba",
+    "assert_state_dict_compatible",
+    "QuantConfig",
+    "QuantizedLinear",
+    "quantize_block",
+    "memory_footprint",
+    "__version__",
+]
