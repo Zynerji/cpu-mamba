@@ -110,8 +110,18 @@ class CPUMamba(nn.Module):
         Cp_f = Cp.float().contiguous()
         D_f = self.D.float().contiguous()
 
-        scan_op = _try_load_cpp_scan()
-        if scan_op is not None and not getattr(self, "_force_time_loop", False):
+        backend = getattr(self, "_scan_backend", "auto")
+        force_loop = bool(getattr(self, "_force_time_loop", False))
+        scan_op = None if force_loop else _try_load_cpp_scan()
+
+        if backend == "assoc" and not force_loop:
+            from cpu_mamba.scan_assoc import selective_scan_assoc, selective_scan_assoc_chunked
+            chunk_T = int(getattr(self, "_assoc_chunk_T", 0) or 0)
+            if chunk_T > 0:
+                y = selective_scan_assoc_chunked(x_f, dt_f, A.contiguous(), Bp_f, Cp_f, D_f, chunk_T=chunk_T)
+            else:
+                y = selective_scan_assoc(x_f, dt_f, A.contiguous(), Bp_f, Cp_f, D_f)
+        elif scan_op is not None and not force_loop:
             # Fast path: C++ kernel runs the full T-step recurrence + skip + sum-to-y
             y = scan_op.selective_scan_cpu(x_f, dt_f, A.contiguous(), Bp_f, Cp_f, D_f)
         else:

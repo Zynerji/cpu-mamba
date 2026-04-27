@@ -43,7 +43,7 @@ Two backends, both produce identical outputs:
 | **C++ kernel** (default; OpenMP across (B, d_inner), sequential across T) | **~11×** |
 | **Python time-loop** (fallback; pure PyTorch) | 1× (reference) |
 
-Bench at v60-class shape (B=151, T=180, d_inner=1536, d_state=24) on 8-thread x86_64:
+Bench at large-batch panel shape (B=151, T=180, d_inner=1536, d_state=24) on 8-thread x86_64:
 - Python time-loop: ~1535 ms
 - C++ kernel: ~133 ms
 
